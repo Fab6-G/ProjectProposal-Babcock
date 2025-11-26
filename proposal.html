@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactor Rush: Interactive Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Corporate Marine (bg-slate-50, text-slate-800, primary-blue-900, accent-sky-600) -->
+    <!-- Application Structure Plan: A single-page, tabbed navigation app structure (Overview, Experience, Gameplay, Value). This non-linear design, unlike the original report, allows clients to jump directly to sections of interest. The 'Gameplay' section includes an interactive simulation of the game's core logic (color-matching) to make the proposal tangible and demonstrate the concept effectively, which is the primary goal for this type of "concept" report. -->
+    <!-- Visualization & Content Choices: Report: Experience Flow -> Goal: Show process/time -> Viz: Chart.js Doughnut (for time allocation) + HTML/Tailwind step-diagram (for user journey). Justification: Fulfills Chart.js req and clearly visualizes the session's structure. Report: Core Gameplay Logic -> Goal: Demonstrate interactivity -> Viz: Custom JS-powered 'mini-game' with clickable buttons and feedback. Justification: Provides a 'wow' factor by simulating the game's core loop, making the proposal far more engaging than a static table. Report: Value Prop -> Goal: Organize -> Viz: HTML/Tailwind card grid. Justification: More modern and readable than a table. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+<!-- Header & Navigation -->
+<header class="sticky top-0 z-50 bg-white/95 shadow-md backdrop-blur-sm">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+            <div class="flex items-center">
+                <!-- Logo Integration -->
+                <img src="images/GoldieSolutions_Logo_320x132.png" alt="Goldie Solutions Logo" class="h-10 w-auto mr-4"/>
+                <h1 class="text-xl font-extrabold text-blue-900 tracking-tight">REACTOR RUSH // Babcock Innovation</h1>
+            </div>
+            <div class="hidden sm:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="#overview" class="nav-link rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-100 hover:text-blue-900">Overview</a>
+                    <a href="#experience" class="nav-link rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-100 hover:text-blue-900">The Experience</a>
+                    <a href="#gameplay" class="nav-link rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-100 hover:text-blue-900">Core Gameplay</a>
+                    <a href="#value" class="nav-link rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-sky-100 hover:text-blue-900">Value Proposition</a>
+                </div>
+            </div>
+            <div class="sm:hidden">
+                <select id="mobile-nav" class="rounded-md border-slate-300 py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500">
+                    <option value="#overview">Overview</option>
+                    <option value="#experience">The Experience</option>
+                    <option value="#gameplay">Core Gameplay</option>
+                    <option value="#value">Value Proposition</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+
+    <!-- Section 1: Overview -->
+    <section id="overview" class="mb-16 scroll-mt-16">
+        <h2 class="text-3xl font-bold tracking-tight text-blue-900 sm:text-4xl">Project Overview</h2>
+        <p class="mt-4 max-w-3xl text-lg text-slate-600">
+            This proposal outlines "Reactor Rush," a high-impact VR experience designed to attract, engage, and immerse potential recruits. It translates the high-stakes, mission-critical environment of HMNB Clyde into a fast-paced, 90-second game that gamifies engineering problem-solving.
+        </p>
+
+        <div class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-lg bg-white p-6 shadow-xl">
+                <div class="text-5xl font-bold text-sky-600">90s</div>
+                <p class="mt-2 text-lg font-medium text-slate-800">High-Octane Session</p>
+                <p class="mt-1 text-slate-600">Delivers a burst of excitement, perfect for high-traffic event queues.</p>
+            </div>
+            <div class="rounded-lg bg-white p-6 shadow-xl">
+                <div class="text-5xl font-bold text-sky-600">4</div>
+                <p class="mt-2 text-lg font-medium text-slate-800">Core Engineering Tasks</p>
+                <p class="mt-1 text-slate-600">Gamifies diagnostics, mechanical adjustment, thermal control, and system integrity.</p>
+            </div>
+            <div class="rounded-lg bg-white p-6 shadow-xl">
+                <div class="text-5xl font-bold text-sky-600">1st</div>
+                <p class="mt-2 text-lg font-medium text-slate-800">Person Immersion</p>
+                <p class="mt-1 text-slate-600">Puts the user in the boots of a Chief Engineer in a stylized, high-tech submarine bay.</p>
+            </div>
+        </div>
+
+        <div class="mt-12 rounded-lg bg-blue-900 p-8 text-white">
+            <h3 class="text-2xl font-bold">Primary Objective</h3>
+            <p class="mt-2 text-lg text-blue-200">
+                To create a memorable, short-form interactive experience that converts casual interest into high-quality recruitment leads by directly showcasing the challenging and essential nature of engineering careers within the fleet.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 2: The Experience -->
+    <section id="experience" class="mb-16 scroll-mt-16">
+        <h2 class="text-3xl font-bold tracking-tight text-blue-900 sm:text-4xl">The 90-Second Journey</h2>
+        <p class="mt-4 max-w-3xl text-lg text-slate-600">
+            The user's experience is a carefully orchestrated 4-phase flow, moving from a cinematic hook to a high-pressure incident, through the core gameplay loop, and concluding with a satisfying resolution. The vast majority of time is dedicated to the interactive gameplay itself.
+        </p>
+
+        <div class="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-2">
+            <!-- Flow Diagram -->
+            <div class="flex flex-col justify-center">
+                <h3 class="mb-6 text-center text-xl font-semibold text-slate-800">Visual & Experience Flow</h3>
+                <ol class="space-y-4">
+                    <li class="flex items-start">
+                        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky-600 bg-sky-100 text-lg font-bold text-sky-700">1</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-medium text-slate-900">Cinematic Opening (5-8s)</h4>
+                            <p class="text-slate-600">A stylized submarine glides underwater, then a rapid zoom transitions to FPV in the engineering bay.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-purple-600 bg-purple-100 text-lg font-bold text-purple-700">2</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-medium text-slate-900">Immersive Incident (3-5s)</h4>
+                            <p class="text-slate-600">Red lights flash. Sirens blare. The Captain shouts the order: "Get that reactor under control!"</label>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-yellow-500 bg-yellow-100 text-lg font-bold text-yellow-700">3</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-medium text-slate-900">Core Gameplay (80-90s)</h4>
+                            <p class="text-slate-600">The fast-paced, color-coded task system begins. The user must react, grab tools, and stabilize the reactor.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-green-600 bg-green-100 text-lg font-bold text-green-700">4</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-medium text-slate-900">Session Conclusion (3s)</h4>
+                            <p class="text-slate-600">Reactor stabilizes. Lights normalize. The Captain offers praise: "Excellent work, engineer!"</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <!-- Time Allocation Chart -->
+            <div class="flex flex-col">
+                <h3 class="mb-6 text-center text-xl font-semibold text-slate-800">Session Time Allocation</h3>
+                <div class="chart-container">
+                    <canvas id="experienceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Core Gameplay -->
+    <section id="gameplay" class="mb-16 scroll-mt-16">
+        <h2 class="text-3xl font-bold tracking-tight text-blue-900 sm:text-4xl">Interactive Gameplay Concept</h2>
+        <p class="mt-4 max-w-3xl text-lg text-slate-600">
+            The core mechanic is a simple, high-speed task-matching system. The reactor signals a problem (color), and the player must select the correct tool and perform the right action. This demo simulates the *decision-making* part of that loop.
+        </p>
+
+        <!-- Gameplay Interactive Demo -->
+        <div class="mt-10 rounded-lg bg-white p-6 shadow-xl lg:p-8">
+            <h3 class="text-center text-2xl font-bold text-slate-800">Gameplay Logic Demo</h3>
+            <p class="mb-6 text-center text-slate-600">Click "Start Task" to get an assignment, then choose the correct tool.</p>
+
+            <div class="flex flex-col items-center gap-6 lg:flex-row lg:items-start lg:gap-8">
+                <!-- Tools -->
+                <div class="w-full flex-1 rounded-lg border border-slate-200 p-4">
+                    <h4 class="mb-4 text-center text-lg font-medium">Available Tools</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="tool-button rounded-lg bg-purple-600 p-4 text-lg font-bold text-white shadow-md transition hover:bg-purple-700" data-tool="Wrench">Wrench</button>
+                        <button class="tool-button rounded-lg bg-sky-600 p-4 text-lg font-bold text-white shadow-md transition hover:bg-sky-700" data-tool="Sprayer">Sprayer</button>
+                        <button class="tool-button rounded-lg bg-green-600 p-4 text-lg font-bold text-white shadow-md transition hover:bg-green-700" data-tool="Hammer">Hammer</button>
+                        <button class="tool-button rounded-lg bg-yellow-500 p-4 text-lg font-bold text-white shadow-md transition hover:bg-yellow-600" data-tool="Pad">Diagnostic Pad</button>
+                    </div>
+                </div>
+
+                <!-- Reactor Status -->
+                <div class="flex w-full flex-col items-center lg:w-auto">
+                    <button id="startTaskButton" class="rounded-lg bg-blue-900 px-6 py-3 text-lg font-bold text-white shadow-lg transition hover:bg-sky-600">
+                        Start Task
+                    </button>
+                    <div id="reactorStatus" class="mt-6 flex h-32 w-full max-w-sm items-center justify-center rounded-lg bg-slate-800 p-4 text-center shadow-inner lg:h-36 lg:w-64">
+                        <span class="text-2xl font-bold text-slate-400">Awaiting Task...</span>
+                    </div>
+                    <div id="gameplayFeedback" class="mt-4 h-10 text-center text-lg font-medium text-slate-700"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scoring & Feel -->
+        <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div class="rounded-lg bg-white p-6 shadow-xl">
+                <h3 class="text-xl font-semibold text-slate-800">Scoring System</h3>
+                <ul class="mt-4 list-inside list-disc space-y-2 text-slate-600">
+                    <li><strong class="text-slate-700">Correct Action:</strong> +100 points</li>
+                    <li><strong class="text-slate-700">Speed Bonus:</strong> +20 to +50 points</li>
+                    <li><strong class="text-slate-700">Combo Streaks:</strong> Multiplier increases (x1.2, x1.5, x2)</li>
+                    <li><strong class="text-slate-700">Mistakes:</strong> 0 points or small time penalty</li>
+                </ul>
+            </div>
+            <div class="rounded-lg bg-white p-6 shadow-xl">
+                <h3 class="text-xl font-semibold text-slate-800">Game Feel</h3>
+                <ul class="mt-4 list-inside list-disc space-y-2 text-slate-600">
+                    <li>Fast, punchy, and satisfying haptics</li>
+                    <li>Clear, distinct audio cues for success</li>
+                    <li>Big, bold visual feedback from the reactor</li>
+                    <li>High-pressure, but fun—not stressful</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Value Proposition -->
+    <section id="value" class="mb-16 scroll-mt-16">
+        <h2 class="text-3xl font-bold tracking-tight text-blue-900 sm:text-4xl">Engagement & Recruitment Value</h2>
+        <p class="mt-4 max-w-3xl text-lg text-slate-600">
+            This tool is not just a game; it's a high-ROI asset designed specifically to meet recruitment goals by creating a memorable and shareable experience that directly links to the core skills of an engineer.
+        </p>
+
+        <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-lg bg-white p-6 shadow-xl transition hover:shadow-2xl">
+                <h3 class="text-lg font-semibold text-blue-900">Short & Replayable</h3>
+                <p class="mt-2 text-slate-600">Maximizes event throughput, minimizes queue frustration, and encourages re-tries for high scores.</p>
+            </div>
+            <div class="rounded-lg bg-white p-6 shadow-xl transition hover:shadow-2xl">
+                <h3 class="text-lg font-semibold text-blue-900">Gamified Competition</h3>
+                <p class="mt-2 text-slate-600">Leaderboards attract crowds, create natural interest, and provide easy conversation starters for staff.</p>
+            </div>
+            <div class="rounded-lg bg-white p-6 shadow-xl transition hover:shadow-2xl">
+                <h3 class="text-lg font-semibold text-blue-900">Authentic Skill Showcase</h3>
+                <p class="mt-2 text-slate-600">Directly demonstrates quick-thinking, systematic task management, and decision-making under pressure.</p>
+            </div>
+            <div class="rounded-lg bg-white p-6 shadow-xl transition hover:shadow-2xl">
+                <h3 class="text-lg font-semibold text-blue-900">Ease of Operation</h3>
+                <p class="mt-2 text-slate-600">Uses a purely stylized environment with no classified imagery, making it easy for any staff member to supervise.</p>
+            </div>
+            <div class="rounded-lg bg-white p-6 shadow-xl transition hover:shadow-2xl">
+                <h3 class="text-lg font-semibold text-blue-900">Campaign Ready</h3>
+                <p class="mt-2 text-slate-600">Integrates perfectly with messaging like "Be the Engineer Who Keeps the Fleet Running."</Services>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-slate-200 bg-white">
+    <div class="container mx-auto px-4 py-6 text-center text-sm text-slate-500">
+        Interactive Proposal for Babcock International // Reactor Rush
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Smooth Scroll Navigation (Desktop) ---
+        document.querySelectorAll('a.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // --- Select-based Navigation (Mobile) ---
+        const mobileNav = document.getElementById('mobile-nav');
+        if(mobileNav) {
+            mobileNav.addEventListener('change', (e) => {
+                const targetId = e.target.value;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
+
+        // --- Experience Doughnut Chart ---
+        const ctx = document.getElementById('experienceChart');
+        if (ctx) {
+            const experienceData = {
+                labels: ['Cinematic Opening (8s)', 'Immersive Incident (5s)', 'Core Gameplay (84s)', 'Conclusion (3s)'],
+                datasets: [{
+                    label: 'Session Time Allocation',
+                    data: [8, 5, 84, 3],
+                    backgroundColor: [
+                        'rgb(59, 130, 246)',  // sky-500
+                        'rgb(97, 37, 124)',   // Purple-500
+                        'rgb(234, 179, 8)',   // yellow-500
+                        'rgb(34, 197, 94)'    // green-500
+                    ],
+                    hoverOffset: 4
+                }]
+            };
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: experienceData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                },
+                                boxWidth: 12,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + 's';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Core Gameplay Demo ---
+        const tasks = [
+            { color: 'Purple', tool: 'Wrench', label: 'Critical Pressure!', class: 'bg-purple-600 text-white' },
+            { color: 'Blue', tool: 'Sprayer', label: 'Heat Build-up!', class: 'bg-sky-600 text-white' },
+            { color: 'Green', tool: 'Hammer', label: 'Vibration Stress!', class: 'bg-green-600 text-white' },
+            { color: 'Yellow', tool: 'Pad', label: 'System Error!', class: 'bg-yellow-500 text-white' }
+        ];
+
+        const startButton = document.getElementById('startTaskButton');
+        const reactorDisplay = document.getElementById('reactorStatus');
+        const toolButtons = document.querySelectorAll('.tool-button');
+        const feedbackMessage = document.getElementById('gameplayFeedback');
+
+        let currentTask = null;
+
+        function startNewTask() {
+            const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
+            currentTask = randomTask;
+
+            reactorDisplay.className = `mt-6 flex h-32 w-full max-w-sm items-center justify-center rounded-lg p-4 text-center shadow-inner lg:h-36 lg:w-64 ${currentTask.class}`;
+            reactorDisplay.innerHTML = `<span class="text-3xl font-bold">${currentTask.label}</span>`;
+
+            feedbackMessage.textContent = 'Select the correct tool...';
+            feedbackMessage.className = 'mt-4 h-10 text-center text-lg font-medium text-slate-700';
+            startButton.textContent = 'Next Task';
+        }
+
+        function handleToolSelection(e) {
+            if (!currentTask) {
+                feedbackMessage.textContent = 'Click "Start Task" first!';
+                feedbackMessage.className = 'mt-4 h-10 text-center text-lg font-medium text-purple-600';
+                return;
+            }
+
+            const selectedTool = e.target.dataset.tool;
+
+            if (selectedTool === currentTask.tool) {
+                feedbackMessage.textContent = 'Correct! +100 Points';
+                feedbackMessage.className = 'mt-4 h-10 text-center text-lg font-medium text-green-600';
+                reactorDisplay.className = `mt-6 flex h-32 w-full max-w-sm items-center justify-center rounded-lg bg-green-100 p-4 text-center shadow-inner lg:h-36 lg:w-64`;
+                reactorDisplay.innerHTML = `<span class="text-3xl font-bold text-green-700">Stabilised!</span>`;
+                currentTask = null;
+            } else {
+                feedbackMessage.textContent = 'Mistake! Try again.';
+                feedbackMessage.className = 'mt-4 h-10 text-center text-lg font-medium text-purple-600';
+            }
+        }
+
+        if(startButton) {
+            startButton.addEventListener('click', startNewTask);
+        }
+
+        toolButtons.forEach(button => {
+            button.addEventListener('click', handleToolSelection);
+        });
+
+    });
+</script>
+</body>
+</html>
